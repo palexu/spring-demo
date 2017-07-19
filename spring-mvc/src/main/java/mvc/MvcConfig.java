@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -15,7 +16,7 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
 @ComponentScan("mvc")
-public class MyMvcConfig extends WebMvcConfigurerAdapter {
+public class MvcConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public InternalResourceViewResolver viewResolver() {
@@ -24,6 +25,12 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
         viewResolver.setSuffix(".jsp");
         viewResolver.setViewClass(JstlView.class);
         return viewResolver;
+    }
+
+
+    @Bean
+    public DemoInterceptor demoInterceptor() {
+        return new DemoInterceptor();
     }
 
     /**
@@ -36,6 +43,11 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/asserts/");
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {//2
+        registry.addInterceptor(demoInterceptor());
     }
 
 }
