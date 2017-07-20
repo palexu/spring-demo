@@ -1,8 +1,8 @@
-package conditionl;
+package conditionl.service;
 
 /**
  * Created by xjy on 2017/7/14.
  */
 public interface OsService {
-    public void show();
+    void show();
 }
